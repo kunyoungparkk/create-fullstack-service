@@ -3,7 +3,7 @@
 ## 서비스 생성
 
 ```shell
-pnpx degit github:bloominggrace/create-fullstack-service
+pnpx degit github:kunyoungparkk/create-fullstack-service
 ```
 
 ## 🚀 시작하기
