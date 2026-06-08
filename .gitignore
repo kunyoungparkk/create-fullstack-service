@@ -15,15 +15,6 @@ logs/
 *-debug.log*
 *-error.log*
 
-.idea/*
-!.idea/dictionaries
-!.idea/inspectionProfiles
-!.idea/jsLinters
-!.idea/prettier.xml
-*.iml
-*.iws
-.idea_modules/
-
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
