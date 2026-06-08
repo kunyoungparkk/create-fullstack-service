@@ -110,6 +110,12 @@ paths:
 - 간단한 검증은 직접 구현한다.
   - 예시 1: `URL.canParse(url.trim())`
 
+# HTTP 정책
+
+- HTTP 클라이언트는 `axios`를 사용하고, 설정된 인스턴스는 `common/lib`에 둔다.
+- 서버와의 쿠키 인증을 위해 `withCredentials`를 켠다.
+- 요청·응답 타입은 공유 `types` 패키지의 타입으로 지정한다.
+
 # 스타일 정책
 
 - 클래스는 항상 `cn`으로 정의한다.

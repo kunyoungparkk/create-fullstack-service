@@ -32,6 +32,9 @@ importers:
       '@types/ms':
         specifier: ^2.1.0
         version: 2.1.0
+      axios:
+        specifier: ^1.15.2
+        version: 1.15.2
       i18next:
         specifier: ^26.0.6
         version: 26.0.6(typescript@6.0.3)
