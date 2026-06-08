@@ -58,6 +58,7 @@ paths:
   - 예시 2: `FindUsersDto`, `FindUsersRes`
 - 입력은 `class-validator`로 검증한다.
 - 의도치 않은 정보 유출을 막기 위해 응답 속성은 `@Expose()`로 명시한다.
+- 요청·응답 shape는 `types`의 공유 타입을 `implements`하고, 응답의 날짜는 ISO 문자열로 직렬화한다.
 
 # 테스트 정책
 

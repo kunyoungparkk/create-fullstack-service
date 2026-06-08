@@ -1,11 +1,12 @@
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { type OriginsRes, type SearchOrigins } from 'types';
 
 import { EscapeWildcards, OmitEmpty, Trim } from '@/common/common.decorators';
 
 import { FindOriginRes } from './find-origin.dto';
 
-export class SearchOriginsDto {
+export class SearchOriginsDto implements SearchOrigins {
   @IsOptional()
   @IsString()
   @EscapeWildcards()
@@ -30,7 +31,7 @@ export class SearchOriginsDto {
   pageSize!: number;
 }
 
-export class SearchOriginsRes {
+export class SearchOriginsRes implements OriginsRes {
   @Expose()
   @Type(() => FindOriginRes)
   origins!: FindOriginRes[];

@@ -69,10 +69,13 @@ karpathy 4원칙에 더해 이 저장소에서 지킨다.
 
 Monorepo를 pnpm의 Workspace와 Turborepo를 사용하여 구성한다. 기술 스택, 명령어, 컨벤션은 각 Workspace의 `CLAUDE.md`를 참고한다.
 
-| Workspace | 경로             |
-|-----------|----------------|
-| Server    | `apps/server`  |
-| Client    | `apps/client`  |
+| Workspace | 경로                   |
+|-----------|----------------------|
+| Server    | `apps/server`        |
+| Client    | `apps/client`        |
+| Types     | `packages/types`     |
+
+`packages/types`는 클라이언트와 서버가 공유하는 요청·응답 타입(와이어 모양)을 둔다. 서버 DTO는 이를 `implements`하고 응답의 날짜는 ISO 문자열로 직렬화하며, 클라이언트는 `import type`으로 사용한다. 검증 로직은 각 레이어가 담당한다.
 
 # 개발 환경
 

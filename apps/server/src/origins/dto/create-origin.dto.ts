@@ -1,12 +1,13 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { IsUrl } from 'class-validator';
+import { type CreateOrigin, type OriginRes } from 'types';
 
-export class CreateOriginDto {
+export class CreateOriginDto implements CreateOrigin {
   @IsUrl()
   url!: string;
 }
 
-export class CreateOriginRes {
+export class CreateOriginRes implements OriginRes {
   @Expose()
   id!: string;
 
@@ -17,5 +18,6 @@ export class CreateOriginRes {
   isActive!: boolean;
 
   @Expose()
-  createdAt?: Date;
+  @Transform(({ value }) => (value as Date).toISOString())
+  createdAt!: string;
 }

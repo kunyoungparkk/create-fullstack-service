@@ -1,6 +1,7 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
+import { type OriginRes } from 'types';
 
-export class FindOriginRes {
+export class FindOriginRes implements OriginRes {
   @Expose()
   id!: string;
 
@@ -8,8 +9,9 @@ export class FindOriginRes {
   url!: string;
 
   @Expose()
-  isActive?: boolean;
+  isActive!: boolean;
 
   @Expose()
-  createdAt?: Date;
+  @Transform(({ value }) => (value as Date).toISOString())
+  createdAt!: string;
 }
