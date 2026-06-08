@@ -5,7 +5,7 @@ import {
   HealthCheckResult,
   HealthCheckService,
   MemoryHealthIndicator,
-  MikroOrmHealthIndicator,
+  TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
 import v8 from 'v8';
 
@@ -21,7 +21,7 @@ export class AppController {
     private readonly healthCheckService: HealthCheckService,
     private readonly memoryHealthIndicator: MemoryHealthIndicator,
     private readonly diskHealthIndicator: DiskHealthIndicator,
-    private readonly mikroOrmHealthIndicator: MikroOrmHealthIndicator,
+    private readonly typeOrmHealthIndicator: TypeOrmHealthIndicator,
     private readonly appService: AppService,
   ) {}
 
@@ -42,6 +42,6 @@ export class AppController {
   @Get('/health/readiness')
   @HealthCheck()
   getReadinessHealth(): Promise<HealthCheckResult> {
-    return this.healthCheckService.check([() => this.mikroOrmHealthIndicator.pingCheck('database')]);
+    return this.healthCheckService.check([() => this.typeOrmHealthIndicator.pingCheck('database')]);
   }
 }

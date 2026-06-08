@@ -9,7 +9,7 @@ import { type Params } from 'nestjs-pino';
 
 import { REDIS_CLIENT, RedisModule } from '@/redis/redis.module';
 
-import { getEnvFilePath, isDevelopment, isProduction } from '../mikro-orm.config';
+import { getEnvFilePath, isDevelopment, isProduction } from '../data-source';
 
 export function getStatusCodeIcon(statusCode: number): string {
   if (statusCode >= 500) return '🔥';

@@ -1,17 +1,18 @@
 // @ts-expect-error no type declarations
 import '@swc-node/register/esm-register';
+import 'reflect-metadata';
 
-import { MikroORM } from '@mikro-orm/core';
+import { ORIGIN_FIXTURES } from '@test/test.fixtures';
+import { DataSource } from 'typeorm';
 
-import mikroOrmConfig from './mikro-orm.config';
-import { TestSeeder } from './mikro-orm.seeders';
+import { dataSourceOptions } from '@/../data-source';
+import { Origin } from '@/origins/entities';
 
 export async function setup(): Promise<void> {
-  const mikroOrm = await MikroORM.init(mikroOrmConfig);
+  const dataSource = new DataSource({ ...dataSourceOptions, entities: [Origin] });
 
-  await mikroOrm.schema.ensureDatabase();
-  await mikroOrm.schema.update();
-  await mikroOrm.schema.clear();
-  await mikroOrm.seeder.seed(TestSeeder);
-  await mikroOrm.close();
+  await dataSource.initialize();
+  await dataSource.synchronize(true);
+  await dataSource.getRepository(Origin).save([...ORIGIN_FIXTURES]);
+  await dataSource.destroy();
 }

@@ -1,7 +1,8 @@
-import { EntityManager } from '@mikro-orm/core';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Origin } from './entities';
 
@@ -11,7 +12,7 @@ const ALLOWED_ORIGINS_CACHE_KEY = 'allowed-origins';
 export class AllowedOriginsService {
   constructor(
     private readonly configService: ConfigService,
-    private readonly entityManager: EntityManager,
+    @InjectRepository(Origin) private readonly originRepository: Repository<Origin>,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
@@ -25,7 +26,7 @@ export class AllowedOriginsService {
     allowedOrigins = Array.from(
       new Set([
         ...(this.configService.get<string[]>('ALLOWED_ORIGINS') || []),
-        ...(await this.entityManager.fork().find(Origin, { isActive: true })).map((origin) => origin.url),
+        ...(await this.originRepository.findBy({ isActive: true })).map((origin) => origin.url),
       ]),
     );
     await this.cacheManager.set(ALLOWED_ORIGINS_CACHE_KEY, allowedOrigins);

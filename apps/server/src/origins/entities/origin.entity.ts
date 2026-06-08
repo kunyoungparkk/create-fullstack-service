@@ -1,21 +1,20 @@
-import { Entity, PrimaryKey, Property, Unique } from '@mikro-orm/decorators/legacy';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { uuidv7 } from 'uuidv7';
 
 @Entity()
 export class Origin {
-  @PrimaryKey()
+  @PrimaryColumn('uuid')
   id: string = uuidv7();
 
-  @Property()
-  @Unique()
+  @Column({ unique: true })
   url!: string;
 
-  @Property({ default: true })
-  isActive?: boolean;
+  @Column({ default: true })
+  isActive = true;
 
-  @Property({ onCreate: () => new Date() })
-  createdAt?: Date;
+  @CreateDateColumn()
+  createdAt!: Date;
 
-  @Property({ onCreate: () => new Date(), onUpdate: () => new Date() })
-  updatedAt?: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }

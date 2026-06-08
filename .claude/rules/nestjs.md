@@ -9,10 +9,10 @@ paths:
 1. 기본적인 코드 작성 원칙은 NestJS 공식 문서를 따른다.
 2. NestJS 메커니즘을 파괴하지 않는다.
 
-# MikroORM 정책
+# TypeORM 정책
 
-- 반드시 `EntityManager`만 사용하고, `EntityRepository`는 사용하지 않는다.
-- 여러 변경의 원자성이 필요할 때는 반드시 `@Transactional()`을 사용한다.
+- 도메인 데이터 접근은 `@InjectRepository`로 주입한 `Repository`를 사용한다.
+- 여러 변경의 원자성이 필요할 때는 `DataSource`의 트랜잭션으로 묶는다.
 
 # 모듈 정책
 
@@ -39,15 +39,14 @@ paths:
 - 메서드 이름은 NestJS CRUD 표준을 따르고, 검색은 `search`, 커서 페이지네이션은 `scroll`을 사용한다.
 - 파라미터와 반환은 값이 하나면 그대로, 여럿이면 객체로 묶는다.
 - 에러는 의미에 맞는 HTTP 예외로 변환한다.
-  - 예시 1: `NotFoundError`는 `NotFoundException`으로 변환한다.
-  - 예시 2: `UniqueConstraintViolationException`은 `ConflictException`으로 변환한다.
+  - 예시 1: `EntityNotFoundError`는 `NotFoundException`으로 변환한다.
+  - 예시 2: 유니크 제약 위반(`QueryFailedError`, PostgreSQL `23505`)은 `ConflictException`으로 변환한다.
 
 # 엔티티 정책
 
 - PK는 UUIDv7을 사용하고 `uuidv7()`으로 생성한다.
-- 자동 채움 속성은 `Opt`를 붙인다.
-- 변경 추적이 필요한 엔티티는 `createdAt`, `updatedAt`을 둔다.
-- 고아 레코드를 방지하기 위해 관계 속성은 `deleteRule`을 명시한다.
+- 변경 추적이 필요한 엔티티는 `@CreateDateColumn`, `@UpdateDateColumn`을 둔다.
+- 고아 레코드를 방지하기 위해 관계에는 `onDelete`를 명시한다.
 
 # DTO 정책
 

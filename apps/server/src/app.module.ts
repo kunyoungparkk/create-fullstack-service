@@ -1,14 +1,13 @@
-import { MikroORM } from '@mikro-orm/core';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { CacheModule } from '@nestjs/cache-manager';
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { TerminusModule } from '@nestjs/terminus';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 
-import mikroOrmConfig, { isProduction } from '@/../mikro-orm.config';
+import { dataSourceOptions } from '@/../data-source';
 import { OriginsModule } from '@/origins/origins.module';
 import { RedisModule } from '@/redis/redis.module';
 
@@ -20,7 +19,7 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot(configConfig),
     LoggerModule.forRoot(loggerConfig),
-    MikroOrmModule.forRoot(mikroOrmConfig),
+    TypeOrmModule.forRoot({ ...dataSourceOptions, autoLoadEntities: true }),
     CacheModule.registerAsync(cacheConfig),
     RedisModule,
     TerminusModule,
@@ -30,23 +29,4 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, AppService],
 })
-export class AppModule implements OnModuleInit {
-  constructor(private readonly orm: MikroORM) {}
-
-  async onModuleInit(): Promise<void> {
-    if (!isProduction()) {
-      await this.updateDatabase();
-    }
-  }
-
-  private async updateDatabase() {
-    const schema = this.orm.schema;
-
-    await schema.ensureDatabase();
-
-    if ((await schema.getUpdateSchemaSQL()).length !== 0) {
-      await schema.update();
-      Logger.log(`DB가 업데이트 되었습니다.`, AppModule.name);
-    }
-  }
-}
+export class AppModule {}

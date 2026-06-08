@@ -1,15 +1,13 @@
-// noinspection ES6RedundantAwait
-
-import { type EntityManager, MikroORM } from '@mikro-orm/core';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { type Cache, CACHE_MANAGER, CacheModule } from '@nestjs/cache-manager';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, type TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { Random } from '@test/test.utils';
+import { DataSource, type QueryRunner } from 'typeorm';
 import { expect } from 'vitest';
 
-import mikroOrmConfig from '@/../mikro-orm.config';
+import { dataSourceOptions } from '@/../data-source';
 import { configConfig } from '@/app.configs';
 
 import { AllowedOriginsService } from './allowed-origins.service';
@@ -18,36 +16,43 @@ import { OriginsService } from './origins.service';
 
 describe('OriginsService 테스트', () => {
   let testingModule: TestingModule;
-  let mikroOrm: MikroORM;
+  let dataSource: DataSource;
   let cacheManager: Cache;
   let originsService: OriginsService;
-  let entityManager: EntityManager;
+  let allowedOriginsService: AllowedOriginsService;
+  let queryRunner: QueryRunner;
 
   beforeAll(async () => {
     testingModule = await Test.createTestingModule({
       imports: [
-        await ConfigModule.forRoot(configConfig),
-        MikroOrmModule.forRoot(mikroOrmConfig),
-        MikroOrmModule.forFeature([Origin]),
+        ConfigModule.forRoot(configConfig),
+        TypeOrmModule.forRoot({ ...dataSourceOptions, autoLoadEntities: true }),
+        TypeOrmModule.forFeature([Origin]),
         CacheModule.register(),
       ],
       providers: [AllowedOriginsService, OriginsService],
     }).compile();
 
-    mikroOrm = testingModule.get(MikroORM);
+    dataSource = testingModule.get(DataSource);
     cacheManager = testingModule.get<Cache>(CACHE_MANAGER);
     originsService = testingModule.get(OriginsService);
+    allowedOriginsService = testingModule.get(AllowedOriginsService);
   });
 
   beforeEach(async () => {
-    entityManager = mikroOrm.em.fork();
-    Object.assign(originsService, { entityManager });
-    await entityManager.begin();
+    queryRunner = dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    const originRepository = queryRunner.manager.getRepository(Origin);
+    Object.assign(originsService, { originRepository });
+    Object.assign(allowedOriginsService, { originRepository });
   });
 
   afterEach(async () => {
     await cacheManager.clear();
-    await entityManager.rollback();
+    await queryRunner.rollbackTransaction();
+    await queryRunner.release();
   });
 
   afterAll(async () => {
