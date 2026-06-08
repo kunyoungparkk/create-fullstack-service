@@ -30,6 +30,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: 의존성 설치
         run: pnpm --filter=. --filter=server install
+      - name: 린트
+        run: pnpm --filter server lint
+      - name: 타입 검사
+        run: pnpm --filter server type-check
       - name: 프로젝트 빌드
         run: pnpm --filter=. --filter=server build
       - name: 산출물 올리기

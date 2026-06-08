@@ -22,5 +22,9 @@ jobs:
           MISE_NODE_GPG_VERIFY: 'false'
       - name: 의존성 설치
         run: pnpm --filter=. --filter=client install
+      - name: 린트
+        run: pnpm --filter client lint
+      - name: 타입 검사
+        run: pnpm --filter client type-check
       - name: 프로젝트 빌드
         run: pnpm --filter=. --filter=client build
