@@ -10,7 +10,7 @@ export class Origin {
   url!: string;
 
   @Column({ default: true })
-  isActive = true;
+  isActive: boolean = true;
 
   @CreateDateColumn()
   createdAt!: Date;
