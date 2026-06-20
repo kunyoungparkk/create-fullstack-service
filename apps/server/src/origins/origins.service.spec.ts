@@ -73,7 +73,7 @@ describe('OriginsService 테스트', () => {
 
   describe('오리진 검색', () => {
     test('오리진 검색에 성공한다.', async () => {
-      const originFixture = Random.originFixture({ url: 'https://bloomingchatbot.com' });
+      const originFixture = Random.originFixture({ url: 'https://example.com' });
       const { origins: origins0 } = await originsService.search({
         url: originFixture.url.slice(0, 14),
         pageNumber: 1,
@@ -127,7 +127,7 @@ describe('OriginsService 테스트', () => {
 
   describe('오리진 수정', () => {
     test('오리진 수정에 성공한다.', async () => {
-      const originFixture = Random.originFixture({ url: 'https://bloomingchatbot.com' });
+      const originFixture = Random.originFixture({ url: 'https://example.com' });
       const origin = await originsService.findOne({ url: originFixture.url });
 
       await originsService.update({ origin, url: Random.url(), isActive: !originFixture.isActive });
