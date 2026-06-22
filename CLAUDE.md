@@ -101,8 +101,10 @@ Monorepo를 pnpm의 Workspace와 Turborepo를 사용하여 구성한다. 기술 
 - **기존 이슈**: 사용자가 이슈 링크/번호를 제공하면 `gh issue view <번호>`로 본문을 읽고, 그 이슈를 명세로 삼아 구현한다. 추측 금지 — 불명확하면 사용자에게 질문한다
 - **신규 작업**: 이슈가 없으면 **먼저 `superpowers:brainstorming`으로 요구사항을 정리**한다. 사용자가 설계를 승인하면, 그 결과를 알맞은 이슈 템플릿에 채워 Claude가 `gh issue create`로 등록한 뒤 그 이슈로 구현한다
 
-**brainstorming 연계** — 승인된 설계는 별도 spec 문서가 아니라 **GitHub 이슈 본문**으로 남긴다. 설계 승인 → 이슈 생성 → (필요 시 `writing-plans`) → `test-driven-development` →
+**brainstorming 연계** — 승인된 설계는 별도 spec 문서가 아니라 **GitHub 이슈 본문**으로 남긴다. 설계 승인 → 이슈 생성 → `writing-plans` → `subagent-driven-development` →
 `verification-before-completion` 순서
+
+**구현 실행** — `subagent-driven-development`로 계획을 실행한다. 태스크마다 새 서브에이전트가 `test-driven-development`로 구현하고 리뷰를 거친다. 계획이 필요 없는 소규모 작업은 `test-driven-development`로 직접 구현한다.
 
 **템플릿 매핑** (`.github/ISSUE_TEMPLATE/`)
 
