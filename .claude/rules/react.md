@@ -1,7 +1,7 @@
 ---
 description: React 개발 규칙을 설명한다.
 paths:
-  - 'apps/client/**'
+  - "apps/client/**"
 ---
 
 # 코드 작성 원칙
@@ -42,6 +42,13 @@ paths:
 - 같은 목적의 컴포넌트는 같은 폴더로 둔다.
   - 예시 1: `features/ui/buttons`
   - 예시 2: `features/ui/cards`
+
+# 공통 컴포넌트 설계 정책
+
+- 공통 컴포넌트는 사용처부터 설계한다. 구현 전에 여러 도메인의 실제 사용 케이스를 먼저 나열하고, props API를 확정한 뒤 작성한다.
+- 사용처가 하나뿐이면 공통으로 올리지 않고 해당 페이지에 둔다(레이어 정책).
+- props는 나열한 사용처에서 도출한다. 쓰이지 않을 유연성·설정값은 넣지 않는다.
+- 변형은 boolean prop을 늘리지 말고 합성으로 표현한다(`composition-patterns` 스킬).
 
 # 이름 정책
 
