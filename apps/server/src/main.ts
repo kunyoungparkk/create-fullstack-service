@@ -40,7 +40,7 @@ async function bootstrap() {
     },
     credentials: true,
   });
-  await app.listen(process.env.PORT || 3000, process.env.HOST || '0.0.0.0');
+  await app.listen(process.env.PORT || 4000, process.env.HOST || '0.0.0.0');
   logger.log(`서버가 ${await app.getUrl()}에서 실행 중입니다.`, 'bootstrap');
 }
 
