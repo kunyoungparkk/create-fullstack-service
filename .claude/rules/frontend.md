@@ -108,7 +108,10 @@ paths:
 
 # 폼 정책
 
-- `onSubmit` 핸들러에서 `new FormData(e.currentTarget)`으로 값을 읽는다.
+- 폼 상태는 `react-hook-form`의 `useForm`으로 관리한다.
+- 입력은 `register`로 연결하고, 제출은 `handleSubmit`으로 처리한다.
+- 제출 핸들러는 `handle{동사}{명사}`로 명명하고, 서버 변경은 TanStack Query mutation으로 호출한다.
+- 스키마 검증은 `zod` 스키마를 `@hookform/resolvers`의 `zodResolver`로 연결한다.
 
 # 검증 정책
 
