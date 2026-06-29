@@ -1,0 +1,29 @@
+{
+  "rootDir": "..",
+  "testEnvironment": "node",
+  "testTimeout": 30000,
+  "moduleFileExtensions": ["ts", "js", "json"],
+  "testRegex": "test/.*\\.e2e-spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": [
+      "@swc/jest",
+      {
+        "jsc": {
+          "parser": { "syntax": "typescript", "decorators": true },
+          "transform": { "legacyDecorator": true, "decoratorMetadata": true },
+          "target": "es2022"
+        },
+        "module": { "type": "commonjs" }
+      }
+    ]
+  },
+  "transformIgnorePatterns": ["/node_modules/.pnpm/(?!(@faker-js\\+faker)@)"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@test/(.*)$": "<rootDir>/test/$1"
+  },
+  "setupFiles": ["reflect-metadata"],
+  "globalSetup": "<rootDir>/jest.globalSetup.ts",
+  "coverageDirectory": "<rootDir>/coverage",
+  "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.spec.ts", "!src/main.ts"]
+}

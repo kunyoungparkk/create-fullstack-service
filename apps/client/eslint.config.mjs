@@ -1,18 +1,18 @@
 // noinspection JSCheckFunctionSignatures
 
 import eslint from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
 import { globalIgnores } from 'eslint/config';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import tailwindCategorized from 'eslint-plugin-tailwindcss-categorized';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import tailwindCategorized from 'eslint-plugin-tailwindcss-categorized';
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(['.next', 'next-env.d.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -20,22 +20,24 @@ export default tseslint.config([
       eslintPluginPrettierRecommended,
       ...tseslint.configs.recommendedTypeChecked,
       reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
     ],
     languageOptions: {
       ecmaVersion: 2025,
-      globals: globals.browser,
+      globals: { ...globals.browser, ...globals.node },
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
     plugins: {
+      '@next/next': nextPlugin,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
       'tailwindcss-categorized': tailwindCategorized,
     },
     rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-unsafe-argument': 'warn',
@@ -53,12 +55,6 @@ export default tseslint.config([
     files: ['**/*.tsx'],
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-    },
-  },
-  {
-    files: ['**/routes/**/*.tsx'],
-    rules: {
-      'react-refresh/only-export-components': 'off',
     },
   },
 ]);

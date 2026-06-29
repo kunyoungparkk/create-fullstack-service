@@ -1,15 +1,14 @@
 ---
-description: React 개발 규칙을 설명한다.
+description: Frontend 개발 규칙을 설명한다.
 paths:
   - "apps/client/**"
 ---
 
 # 코드 작성 원칙
 
-1. 기본적인 코드 작성 원칙은 React 공식 문서를 따른다.
+1. 기본적인 코드 작성 원칙은 React·Next.js 공식 문서를 따른다.
 2. React 메커니즘을 우회하지 않는다.
 3. 자동 생성 파일은 직접 편집하지 않는다.
-4. `export default` 는 사용하지 않는다.
 
 # 임포트 정책
 
@@ -27,14 +26,14 @@ paths:
 
 # 레이어 정책
 
-- 레이어는 하위부터 `common`, `features`, `pages` 순이다.
+- 레이어는 하위부터 `common`, `features`, `app` 순이다.
 - 하위 레이어는 상위 레이어를 사용할 수 없다.
 - 같은 레이어끼리는 서로 참조할 수 있다.
-- `common`은 비즈니스 로직과 무관한 코드를 둔다.
+- `common`은 비즈니스 로직과 무관한 코드를 `src/common`에 둔다.
   - 예시 1: `common/ui/select`
-- `features`는 여러 페이지에서 재사용하는 비즈니스 로직 코드를 둔다.
+- `features`는 여러 페이지에서 재사용하는 비즈니스 로직 코드를 `src/features`에 둔다.
   - 예시 1: `features/ui/select`
-- `pages`는 한 페이지에 종속된 코드를 둔다.
+- `app`은 App Router 라우트다. 한 페이지에 종속된 코드는 해당 라우트 폴더에 코로케이션한다.
 - 같은 레이어 안에서는 코드의 종류로 그룹화한다.
   - 예시 1: `common/ui`
   - 예시 2: `common/lib`
@@ -113,7 +112,7 @@ paths:
 
 # 검증 정책
 
-- `validateSearch`에는 Zod를 사용한다.
+- 라우트의 검색 파라미터(`searchParams`) 검증에는 Zod를 사용한다.
 - 간단한 검증은 직접 구현한다.
   - 예시 1: `URL.canParse(url.trim())`
 
@@ -121,6 +120,7 @@ paths:
 
 - HTTP 클라이언트는 `axios`를 사용하고, 설정된 인스턴스는 `common/lib`에 둔다.
 - 서버와의 쿠키 인증을 위해 `withCredentials`를 켠다.
+- 서버 컴포넌트에서 인증이 필요한 요청은 `next/headers`의 쿠키를 포워딩한다.
 - 요청·응답 타입은 공유 `types` 패키지의 타입으로 지정한다.
 
 # 스타일 정책

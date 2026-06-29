@@ -1,14 +1,12 @@
-// @ts-expect-error no type declarations
-import '@swc-node/register/esm-register';
 import 'reflect-metadata';
 
-import { ORIGIN_FIXTURES } from '@test/test.fixtures';
 import { DataSource } from 'typeorm';
 
-import { dataSourceOptions } from '@/../data-source';
-import { Origin } from '@/origins/entities';
+import { dataSourceOptions } from './data-source';
+import { Origin } from './src/origins/entities';
+import { ORIGIN_FIXTURES } from './test/test.fixtures';
 
-export async function setup(): Promise<void> {
+export default async function setup(): Promise<void> {
   const dataSource = new DataSource({ ...dataSourceOptions, entities: [Origin] });
 
   await dataSource.initialize();

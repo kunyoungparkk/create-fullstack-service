@@ -1,7 +1,6 @@
 [tools]
 node = "24"
 "npm:pnpm" = "10"
-git-lfs = "3"
 
 [tasks.infra]
 usage = '''

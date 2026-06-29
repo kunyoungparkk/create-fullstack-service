@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: 체크아웃
         uses: actions/checkout@v6
-        with:
-          lfs: true
       - name: 런타임 환경 설정
         uses: jdx/mise-action@v3
         env:

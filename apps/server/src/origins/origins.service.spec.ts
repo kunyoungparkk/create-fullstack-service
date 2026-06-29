@@ -5,7 +5,6 @@ import { Test, type TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Random } from '@test/test.utils';
 import { DataSource, type QueryRunner } from 'typeorm';
-import { expect } from 'vitest';
 
 import { dataSourceOptions } from '@/../data-source';
 import { configConfig } from '@/app.configs';

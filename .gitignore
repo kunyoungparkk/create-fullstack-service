@@ -5,6 +5,9 @@ dist/
 dist-ssr/
 *.tsbuildinfo
 
+.next/
+next-env.d.ts
+
 .turbo/
 
 .env*

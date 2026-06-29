@@ -22,12 +22,4 @@ else
   echo "✅ 타입 검사를 통과했습니다."
 fi
 
-if ! LOG=$(git lfs pre-push "$@" 2>&1); then
-  echo "❌ LFS 전송에 실패했습니다."
-  echo "$LOG"
-  exit 1
-elif [ -n "$LOG" ]; then
-  echo "✅ LFS 전송에 성공했습니다."
-fi
-
 exit 0
