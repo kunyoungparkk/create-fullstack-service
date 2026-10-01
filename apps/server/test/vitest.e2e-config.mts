@@ -7,8 +7,8 @@ export default defineConfig({
   oxc: false,
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../src'),
-      '@test': path.resolve(__dirname),
+      '@': path.resolve(import.meta.dirname, '../src'),
+      '@test': path.resolve(import.meta.dirname),
     },
   },
   test: {
