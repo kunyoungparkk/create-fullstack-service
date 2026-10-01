@@ -101,29 +101,16 @@ Monorepo를 pnpm의 Workspace와 Turborepo를 사용하여 구성한다. 기술 
 - 사용자가 작성한 코드를 AI 에이전트가 다른 패키지로 대체할 수 있으면 사용자에게 제안하고 승인을 받는다.
 - AI 에이전트는 공신력 있거나 유명한 패키지를 추천한다.
 
-# 이슈 기반 작업 흐름
+# 작업 흐름
 
-모든 작업은 **착수 전 GitHub 이슈**가 있어야 한다. 이슈가 그 작업의 단일 출처(SSOT)다.
-기능 명세(예: `TODO_01_01`, `LOGIN_01_03`)는 이 문서가 아니라 **이슈 본문**에 둔다 —
+모든 작업은 `main`에 직접 커밋한다. 기능 명세는 이 문서가 아니라 착수 시 정리한 **설계**에 둔다 —
 불명확하면 추측하지 말고 사용자에게 요청한다.
 
 **진입 경로**
 
-- **기존 이슈**: 사용자가 이슈 링크/번호를 제공하면 `gh issue view <번호>`로 본문을 읽고, 그 이슈를 명세로 삼아 구현한다. 추측 금지 — 불명확하면 사용자에게 질문한다
-- **신규 작업**: 이슈가 없으면 **먼저 `superpowers:brainstorming`으로 요구사항을 정리**한다. 사용자가 설계를 승인하면, 그 결과를 알맞은 이슈 템플릿에 채워 Claude가 `gh issue create`로 등록한 뒤 그 이슈로 구현한다
+- **신규 작업**: **먼저 `superpowers:brainstorming`으로 요구사항을 정리**한다. 사용자가 설계를 승인하면 그 설계를 명세로 삼아 구현한다
 
-**brainstorming 연계** — 승인된 설계는 별도 spec 문서가 아니라 **GitHub 이슈 본문**으로 남긴다. 설계 승인 → 이슈 생성 → `writing-plans` → `subagent-driven-development` →
+**brainstorming 연계** — 설계 승인 → `writing-plans` → `subagent-driven-development` →
 `verification-before-completion` 순서
 
 **구현 실행** — `subagent-driven-development`로 계획을 실행한다. 태스크마다 새 서브에이전트가 `test-driven-development`로 구현하고 리뷰를 거친다. 계획이 필요 없는 소규모 작업은 `test-driven-development`로 직접 구현한다.
-
-**템플릿 매핑** (`.github/ISSUE_TEMPLATE/`)
-
-- `feat` → `feature_request.md`
-- `fix` → `bug_report.md`
-- `chore` → `chore-request.md`
-
-**연결**
-
-- 브랜치·커밋·PR은 해당 이슈를 참조한다 (PR 템플릿 `## 관련 이슈`에 링크, 커밋/PR 본문에 `#<번호>`)
-- 이슈 → `feature/*` 브랜치 → `dev` 대상 PR → 머지 시 이슈 종료
