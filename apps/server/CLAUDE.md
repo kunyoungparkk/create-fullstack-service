@@ -8,7 +8,7 @@
 | ORM       | TypeORM    |
 | Cache     | Redis      |
 | Queue     | BullMQ     |
-| Test      | Jest       |
+| Test      | Vitest     |
 
 # 작업 완료 조건
 

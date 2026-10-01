@@ -1,2 +1,2 @@
-export { en, type Messages } from './en';
+export { en } from './en';
 export { ko } from './ko';
