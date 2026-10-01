@@ -41,12 +41,11 @@ A structured repository for creating and maintaining React Best Practices optimi
 2. Choose the appropriate area prefix:
    - `async-` for Eliminating Waterfalls (Section 1)
    - `bundle-` for Bundle Size Optimization (Section 2)
-   - `server-` for Server-Side Performance (Section 3)
-   - `client-` for Client-Side Data Fetching (Section 4)
-   - `rerender-` for Re-render Optimization (Section 5)
-   - `rendering-` for Rendering Performance (Section 6)
-   - `js-` for JavaScript Performance (Section 7)
-   - `advanced-` for Advanced Patterns (Section 8)
+   - `client-` for Client-Side Data Fetching (Section 3)
+   - `rerender-` for Re-render Optimization (Section 4)
+   - `rendering-` for Rendering Performance (Section 5)
+   - `js-` for JavaScript Performance (Section 6)
+   - `advanced-` for Advanced Patterns (Section 7)
 3. Fill in the frontmatter and content
 4. Ensure you have clear examples with explanations
 5. Run `pnpm build` to regenerate AGENTS.md and test-cases.json
