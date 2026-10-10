@@ -90,10 +90,10 @@ Monorepo를 pnpm의 Workspace와 Turborepo를 사용하여 구성한다. 기술 
 
 # 개발 환경
 
-- 런타임 환경은 Mise로 관리하며 구축과 실행은 `README.md`를 참고한다.
-- 런타임 버전은 `mise.toml`에 정의돼 있다.
+- 구축과 실행은 `README.md`를 참고한다.
+- Node 버전은 `.nvmrc`, pnpm 버전은 `package.json`의 `packageManager`에 정의돼 있다.
 - 패키지 매니저는 pnpm만 사용하며 npm은 차단된다.
-- `mise infra up --env <development|test|production>` 은 `apps/server/.env.<env>` 의 환경 변수를 적용해 인프라를 기동한다.
+- `docker compose --env-file apps/server/.env.<development|test|production> up --detach` 는 해당 환경 변수를 적용해 인프라를 기동한다.
 
 # 패키지 추가
 

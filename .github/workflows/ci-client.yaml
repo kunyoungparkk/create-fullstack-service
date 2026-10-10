@@ -15,10 +15,12 @@ jobs:
     steps:
       - name: 체크아웃
         uses: actions/checkout@v6
+      - name: pnpm 설정
+        uses: pnpm/action-setup@v4
       - name: 런타임 환경 설정
-        uses: jdx/mise-action@v3
-        env:
-          MISE_NODE_GPG_VERIFY: 'false'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
       - name: 의존성 설치
         run: pnpm --filter=. --filter=client install
       - name: 린트
