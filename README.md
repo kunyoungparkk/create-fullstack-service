@@ -18,12 +18,13 @@ pnpx degit github:kunyoungparkk/create-fullstack-service
 nvm install
 ```
 
-### 2. pnpm 활성화
+### 2. pnpm 설치
 
-`package.json`의 `packageManager`에 정의된 버전의 pnpm을 사용합니다.
+[pnpm 공식 설치 문서](https://pnpm.io/installation)를 참고하거나 아래 명령으로 설치합니다.
+버전은 `package.json`의 `packageManager`에 맞춰 자동으로 사용됩니다.
 
 ```shell
-corepack enable
+npm install -g pnpm
 ```
 
 ### 3. 인프라
